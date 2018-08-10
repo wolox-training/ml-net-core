@@ -1,0 +1,19 @@
+.navbar {
+  background-color: white;
+  border-bottom: 2px solid $grey;
+  height: 90px;
+  position:fixed;
+  width: 100%;
+  z-index: 1;
+}
+
+.developer-tools {
+  float:right;
+  font-size: $text-big;
+  margin: 30px 10px auto 10px;
+}
+
+.wlogo {
+  margin: 30px 10px auto 10px;
+  height: 30px;
+}
