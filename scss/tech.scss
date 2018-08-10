@@ -1,0 +1,54 @@
+
+.tech {
+  background-color: $green;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  height: 290px;
+  margin: 20px;
+  max-height: 100%;
+  left: 8px;
+  top: 8px;
+  width: 190px;
+  max-width: 100%;
+  padding: 5px 30px 5px 25px;
+  position:relative;
+  text-align: center;
+}
+
+.tech:before {
+  content: '';
+  border: 2px solid $green;
+  border-radius: inherit;
+  height: inherit;
+  position: absolute;
+  left: -10px;
+  top: -12px;
+  width: inherit;
+
+}
+
+.tech-logo{
+  display: block;
+  margin: 5px auto 5px auto;
+  height: 100px;
+  max-height: 100px;
+  width: 100px;
+  max-width: 100%;
+}
+
+.tech-title {
+ font-family: 'Roboto';
+  margin-top: 10px;
+}
+
+.tech-text {
+  margin-top: 15px;
+  font-family: 'Roboto';
+  font-size: $text-small;
+}
+
+.tech-set {
+  display: flex;
+
+}
