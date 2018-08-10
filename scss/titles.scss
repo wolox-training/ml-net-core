@@ -9,20 +9,18 @@ $title-decoration-width: 70px;
   padding-top: 35px;
   padding-left: 45px;
 
-}
-
-.title:before {
-  content:'';
-  background: url(assets/images/triangle.svg);
-  background-repeat: no-repeat;
-  display: block;
-  height: $tile-decoration-height;
-  margin-left: 15px;
-  margin-top:10px;
-  padding-top: 15px;
-  width: $title-decoration-width;
-  position: absolute;
-  top: 0;
-  left: 18px;
-  z-index:-1;
+  &::before {
+    content:'';
+    background: url(assets/images/triangle.svg);
+    background-repeat: no-repeat;
+    display: block;
+    height: $tile-decoration-height;
+    margin: 10px 15px;
+    padding-top: 15px;
+    width: $title-decoration-width;
+    position: absolute;
+    top: 0;
+    left: 18px;
+    z-index:-1;
+  }
 }
