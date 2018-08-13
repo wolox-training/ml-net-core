@@ -1,10 +1,12 @@
 .navbar {
   background-color: white;
-  border-bottom: 2px solid $grey;
   height: 70px;
   position:fixed;
   width: 100%;
   z-index: 1;
+  -webkit-box-shadow: 0px 6px 27px -7px rgba(0,0,0,0.55);
+  -moz-box-shadow: 0px 6px 27px -7px rgba(0,0,0,0.55);
+  box-shadow: 0px 6px 27px -7px rgba(0,0,0,0.55);
 }
 
 .developer-tools {
