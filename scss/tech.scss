@@ -1,4 +1,3 @@
-
 .tech {
   background-color: $green;
   border-radius: 5px;
@@ -7,25 +6,23 @@
   height: 300px;
   margin: 18px;
   max-height: 100%;
-  left: 8px;
-  top: 8px;
   width: 192px;
   max-width: 100%;
   padding: 5px 27px 2px 16px;
-  position:relative;
+  position: relative;
   text-align: center;
-}
-
-.tech:before {
-  content: '';
-  border: 2px solid $green;
-  border-radius: inherit;
-  height: inherit;
-  position: absolute;
-  left: -9px;
-  top: -9px;
-  width: inherit;
-  z-index:-1;
+  
+   &::before {
+    content: '';
+    border: 2px solid $green;
+    border-radius: inherit;
+    height: inherit;
+    position: absolute;
+    left: -10px;
+    top: -10px;
+    width: inherit;
+    z-index: -1;
+  }
 }
 
 .tech:hover:before {
@@ -37,32 +34,26 @@
 .tech-logo{
   display: block;
   margin: 5px auto 5px auto;
-  height: 100px;
-  max-height: 100%;
   width: 100px;
   max-width: 100%;
 }
 
 .tech-title {
- font-family: 'Roboto';
   margin-top: 10px;
 }
 
 .tech-text {
   margin-top: 15px;
-  font-family: 'Roboto';
   font-size: $text-small;
   width: 100%;
 }
 
 .tech-set {
-  align-content: flex-start;
-  display:flex;
+  display: flex;
   width: 100%;
   margin: auto;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-start;
   padding-left: 50px;
-
 }

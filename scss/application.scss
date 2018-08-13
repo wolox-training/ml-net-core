@@ -1,17 +1,15 @@
 @import 'equalizer';
 @import 'styles';
 @import 'titles';
+@import 'colors';
 @import 'tech';
 @import 'navbar';
 @import 'footer';
+@import 'layout';
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,500');
-
 
 body {
   font-family: 'Roboto';
 }
 
-.center-content {
-  padding-top: 90px;
-  margin-left: 30px;
-}
+
