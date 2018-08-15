@@ -1,34 +1,13 @@
 .tech {
-  background-color: $green;
-  border-radius: 5px;
   display: flex;
   flex-direction: column;
-  height: 300px;
-  margin: 18px;
+  justify-content: center;
   max-height: 100%;
-  width: 192px;
   max-width: 100%;
   padding: 5px 25px 2px 16px;
   position: relative;
   text-align: center;
-
-  &::before {
-    content: '';
-    border: 2px solid $green;
-    border-radius: inherit;
-    height: inherit;
-    position: absolute;
-    left: -10px;
-    top: -10px;
-    width: inherit;
-    z-index: -1;
-  }
-
-  &:hover::before {
-    transition: left 0.5s ease, top 0.5s ease;
-    left: 6px;
-    top: 6px;
-  }
+  width: 192px;
 }
 
 .tech-logo{
@@ -50,11 +29,18 @@
 }
 
 .tech-set {
-  display: flex;
-  width: 100%;
+  display: grid;
+  grid-template-columns: 220px 220px 220px;
+  grid-template-rows: 320px 320px;
+  justify-content: center;
   margin: auto;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
   padding-left: 50px;
+  width: 100%;
+}
+
+.highlighted-tech {
+  border-right: 2px solid $green;
+  grid-row-start: 1;
+  grid-row-end: 3;
+  align-self: strech;
 }
