@@ -4,9 +4,9 @@
   position:fixed;
   width: 100%;
   z-index: 1;
-  -webkit-box-shadow: 0px 6px 27px -7px rgba(0,0,0,0.55);
-  -moz-box-shadow: 0px 6px 27px -7px rgba(0,0,0,0.55);
-  box-shadow: 0px 6px 27px -7px rgba(0,0,0,0.55);
+  -webkit-box-shadow: 0px 6px 27px -7px $box-shadow-color;
+  -moz-box-shadow: 0px 6px 27px -7px $box-shadow-color;
+  box-shadow: 0px 6px 27px -7px $box-shadow-color;
 }
 
 .developer-tools {
