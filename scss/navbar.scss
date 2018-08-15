@@ -1,7 +1,7 @@
 .navbar {
   background-color: $white;
   height: 70px;
-  position:fixed;
+  position: fixed;
   width: 100%;
   z-index: 1;
   -webkit-box-shadow: 0px 6px 27px -7px $box-shadow-color;
@@ -10,7 +10,7 @@
 }
 
 .developer-tools {
-  float:right;
+  float: right;
   font-size: $text-big;
   margin: 20px 20px auto 10px;
 }
