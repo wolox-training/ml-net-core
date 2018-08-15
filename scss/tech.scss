@@ -12,7 +12,7 @@
   position: relative;
   text-align: center;
 
-   &::before {
+  &::before {
     content: '';
     border: 2px solid $green;
     border-radius: inherit;
@@ -23,12 +23,12 @@
     width: inherit;
     z-index: -1;
   }
-}
 
-.tech:hover:before {
-  transition: left 0.5s ease, top 0.5s ease;
-  left: 6px;
-  top: 6px;
+  &:hover::before {
+    transition: left 0.5s ease, top 0.5s ease;
+    left: 6px;
+    top: 6px;
+  }
 }
 
 .tech-logo{
