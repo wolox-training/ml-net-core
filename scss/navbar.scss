@@ -1,12 +1,12 @@
 .navbar {
-  background-color: white;
+  background-color: $white;
   height: 70px;
   position:fixed;
   width: 100%;
   z-index: 1;
-  -webkit-box-shadow: 0px 6px 27px -7px rgba(0,0,0,0.55);
-  -moz-box-shadow: 0px 6px 27px -7px rgba(0,0,0,0.55);
-  box-shadow: 0px 6px 27px -7px rgba(0,0,0,0.55);
+  -webkit-box-shadow: 0px 6px 27px -7px $box-shadow-color;
+  -moz-box-shadow: 0px 6px 27px -7px $box-shadow-color;
+  box-shadow: 0px 6px 27px -7px $box-shadow-color;
 }
 
 .developer-tools {
@@ -16,6 +16,7 @@
 }
 
 .wlogo {
-  margin: 20px 10px auto 10px;
+  margin: 20px auto 10px;
   height: 30px;
+  padding-left: 10px;
 }
