@@ -1,0 +1,50 @@
+.tech {
+  background-color: $green;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  height: 280px;
+  margin: 20px;
+  max-height: 100%;
+  width: 190px;
+  max-width: 100%;
+  padding: 5px 30px 5px 25px;
+  position: relative;
+  text-align: center;
+
+  &::before {
+    content: '';
+    border: 2px solid $green;
+    border-radius: inherit;
+    height: inherit;
+    position: absolute;
+    left: -10px;
+    top: -10px;
+    width: inherit;
+    z-index:-1;
+  }
+}
+
+.tech-logo{
+  display: block;
+  margin: 5px auto 5px auto;
+  height: 100px;
+  width: 100px;
+  max-width: 100%;
+}
+
+.tech-title {
+  margin-top: 10px;
+}
+
+.tech-text {
+  margin-top: 15px;
+  font-size: $text-small;
+}
+
+.tech-set {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  margin: auto;
+}
