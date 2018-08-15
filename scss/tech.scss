@@ -45,7 +45,7 @@
   align-self: strech;
 }
 
-@media only screen and (max-width: 1024px) {
+@media only screen and (max-width: $width-breakpoint) {
   .tech-set {
     align-items: center;
     display: flex;
