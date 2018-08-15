@@ -2,23 +2,11 @@ $tile-decoration-height: 90px;
 $title-decoration-width: 70px;
 
 .title {
+  background: url(assets/images/triangle.svg);
+  background-repeat: no-repeat;
+  background-size: $title-decoration-width $tile-decoration-height;
   color: black;
   font-size: $text-big;
-  margin: 10px;
-  padding: 35px 45px;
-
-  &::before {
-    content: '';
-    background: url(assets/images/triangle.svg);
-    background-repeat: no-repeat;
-    display: block;
-    height: $tile-decoration-height;
-    margin: 10px 15px;
-    padding-top: 15px;
-    width: $title-decoration-width;
-    position: absolute;
-    top: 0;
-    left: 18px;
-    z-index:-1;
-  }
+  margin: 30px 10px 10px;
+  padding: 35px 20px 30px 52px;
 }
