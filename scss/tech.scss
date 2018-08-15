@@ -44,3 +44,21 @@
   grid-row-end: 3;
   align-self: strech;
 }
+
+@media only screen and (max-width: $width-breakpoint) {
+  .tech-set {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    padding-left: 0;
+  }
+
+  .tech {
+    height: 300px;
+    border-top: 2px solid $green;
+  }
+
+  .highlighted-tech {
+    border: 0;
+  }
+}
