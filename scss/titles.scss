@@ -5,12 +5,10 @@ $title-decoration-width: 70px;
   color:black;
   font-size: $text-big;
   margin: 10px;
-  padding-bottom: 35px;
-  padding-top: 35px;
-  padding-left: 45px;
+  padding: 35px 45px;
 
   &::before {
-    content:'';
+    content: '';
     background: url(assets/images/triangle.svg);
     background-repeat: no-repeat;
     display: block;
