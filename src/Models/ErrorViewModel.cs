@@ -1,6 +1,6 @@
 using System;
 
-namespace src.Models
+namespace MlNetCore.Models
 {
     public class ErrorViewModel
     {
