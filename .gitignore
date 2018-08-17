@@ -1,9 +1,8 @@
 application.css
 .sass-cache/
 application.css.map
-
-src/obj/
-src/bin/
-test/bin/
-test/obj/
+obj
+bin
 .vscode
+src/appsettings.Development.json
+src/Properties/launchSettings.json
