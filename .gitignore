@@ -6,5 +6,4 @@ src/obj/
 src/bin/
 test/bin/
 test/obj/
-test/obj/
 .vscode
