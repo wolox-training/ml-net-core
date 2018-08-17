@@ -1,7 +1,7 @@
 using System;
 using Xunit;
 
-namespace test
+namespace MlNetCore.Test
 {
     public class UnitTest1
     {
