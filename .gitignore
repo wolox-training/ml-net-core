@@ -2,7 +2,7 @@ application.css
 .sass-cache/
 application.css.map
 src/obj/
-src/bin/git
+src/bin/
 test/bin/
-test/obj
+test/obj/
 .vscode
