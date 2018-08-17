@@ -1,3 +1,6 @@
 application.css
 .sass-cache/
 application.css.map
+./src/bin/
+./test/bin/
+.vscode
