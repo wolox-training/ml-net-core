@@ -1,6 +1,6 @@
 application.css
 .sass-cache/
 application.css.map
-src/bin/
+src/obj/Debug/netcoreapp2.1/
 test/bin/
 .vscode
