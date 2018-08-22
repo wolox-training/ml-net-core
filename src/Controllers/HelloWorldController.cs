@@ -18,9 +18,11 @@ namespace MlNetCore.Controllers
             return View();
         }
 
-        public string Welcome()
+        public IActionResult Welcome(string name, int numTimes = 1)
         {
-            return "This is the welcome method";
+            ViewData["Message"] = "Hello " + name;
+            ViewData["NumTimes"] = numTimes;
+            return View();
         }
     }
 }
