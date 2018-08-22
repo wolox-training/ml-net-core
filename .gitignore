@@ -1,3 +1,8 @@
 application.css
 .sass-cache/
 application.css.map
+obj
+bin
+.vscode
+src/appsettings.Development.json
+src/Properties/launchSettings.json
