@@ -24,10 +24,9 @@ namespace MlNetCore.Controllers
             return View();
         }
 
-        public IActionResult Welcome(string name, int numTimes = 1)
+        public IActionResult Welcome(string name)
         {
             ViewData["Message"] = _localizer["ContactPage"];
-            ViewData["NumTimes"] = numTimes;
             return View();
         }
     }
