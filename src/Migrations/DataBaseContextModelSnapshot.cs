@@ -21,7 +21,7 @@ namespace MlNetCore.Migrations
 
             modelBuilder.Entity("MlNetCore.Models.Movie", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Genre");
@@ -32,7 +32,7 @@ namespace MlNetCore.Migrations
 
                     b.Property<string>("Title");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.ToTable("Movies");
                 });

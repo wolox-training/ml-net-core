@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MlNetCore.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    [Migration("20180822182106_InitialCreate")]
+    [Migration("20180824204513_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,7 +23,7 @@ namespace MlNetCore.Migrations
 
             modelBuilder.Entity("MlNetCore.Models.Movie", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Genre");
@@ -34,7 +34,7 @@ namespace MlNetCore.Migrations
 
                     b.Property<string>("Title");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.ToTable("Movies");
                 });

@@ -4,7 +4,7 @@ namespace MlNetCore.Repositories.Interfaces
 {
     public interface IUnitOfWork : IDisposable
     {
-        IMovieRepository Movies { get; }
+        IMovieRepository MovieRepository { get; }
         int Complete();
     }
 }

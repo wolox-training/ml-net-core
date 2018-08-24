@@ -12,14 +12,14 @@ namespace MlNetCore.Repositories
         {
         }
 
-        public MovieContext MovieContext
+        public DataBaseContext MovieContext
         {
-            get { return Context as MovieContext; }
+            get { return Context as DataBaseContext; }
         }
 
         public Movie GetMovie(int id)
         {
-            throw new System.NotImplementedException();
+            return Get(id);
         }
     }
 }

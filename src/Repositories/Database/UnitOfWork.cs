@@ -4,15 +4,15 @@ namespace MlNetCore.Repositories.Database
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly MovieContext _context;
+        private readonly DataBaseContext _context;
 
-        public UnitOfWork(MovieContext context)
+        public UnitOfWork(DataBaseContext context)
         {
             _context = context;
-            Movies = new MovieRepository(_context);
+            MovieRepository = new MovieRepository(_context);
         }
 
-        public IMovieRepository Movies { get; private set; }
+        public IMovieRepository MovieRepository { get; private set; }
 
         public int Complete()
         {
