@@ -16,7 +16,7 @@ namespace MlNetCore.Controllers
     public class HelloWorldController : Controller
     {
         private readonly IHtmlLocalizer<HelloWorldController> _localizer;
-        private readonly IUnitOfWork _unitOfWork;
+        private IUnitOfWork _unitOfWork { get; }
         public HelloWorldController(IUnitOfWork unitOfWork, IHtmlLocalizer<HelloWorldController> localizer)
         {
             this._unitOfWork = unitOfWork;
@@ -25,7 +25,7 @@ namespace MlNetCore.Controllers
 
         public IActionResult Index()
         {
-            return View(_unitOfWork.MovieRepository.GetAll().ToList());
+            return View(this._unitOfWork.MovieRepository.GetAll().ToList());
         }
 
         public IActionResult Welcome(string name)
@@ -42,8 +42,8 @@ namespace MlNetCore.Controllers
         {
             Movie movieModel = new Movie(viewMovie.Id, viewMovie.Title, viewMovie.ReleaseDate, 
                                         viewMovie.Genre, viewMovie.Price);
-            _unitOfWork.MovieRepository.Add(movieModel);
-            _unitOfWork.Complete();
+            this._unitOfWork.MovieRepository.Add(movieModel);
+            this._unitOfWork.Complete();
             return RedirectToAction("Index");
         }
     }
