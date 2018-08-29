@@ -2,5 +2,10 @@
     "DescriptionPage": "Página de descripción de su aplicación",
     "ContactPage": "Página de contacto",
     "HomePage": "Página de inicio",
-    "Welcome": "Bienvenido"
+    "Welcome": "Bienvenido",
+    "EditMovie": "Editar Película",
+    "DeleteMovie": "Borrar Película",
+    "DetailsMovie": "Detalles de la Película",
+    "MovieList": "Movie List",
+    "ReturnMovieList": "Volver a Lista de Películas"
 }

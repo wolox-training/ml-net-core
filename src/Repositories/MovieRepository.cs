@@ -16,10 +16,5 @@ namespace MlNetCore.Repositories
         {
             get { return Context as DataBaseContext; }
         }
-
-        public Movie GetMovie(int id)
-        {
-            return Get(id);
-        }
     }
 }
