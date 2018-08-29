@@ -17,7 +17,6 @@ namespace MlNetCore.Controllers
     {
         private readonly IHtmlLocalizer<HelloWorldController> _localizer;
         private readonly IUnitOfWork _unitOfWork;
-
         private IUnitOfWork UnitOfWork { get{ return this._unitOfWork; } }
 
         public HelloWorldController(IUnitOfWork unitOfWork, IHtmlLocalizer<HelloWorldController> localizer)
