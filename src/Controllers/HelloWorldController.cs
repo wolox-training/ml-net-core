@@ -6,6 +6,7 @@ using MlNetCore.Repositories.Interfaces;
 using MlNetCore.Models.Views;
 using Microsoft.AspNetCore.Authorization;
 using System;
+using MlNetCore.Models.VO;
 
 namespace MlNetCore.Controllers
 {
@@ -21,10 +22,14 @@ namespace MlNetCore.Controllers
             this._localizer = localizer;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string movieGenre, string searchString)
         {
             ViewData["Title"] = _localizer["MovieList"];
-            return View(UnitOfWork.MovieRepository.GetAll().ToList());
+            var movieGenreVM = new MovieGenreViewModel();
+            MovieVO movieVO = UnitOfWork.MovieRepository.GetFiltered(movieGenre, searchString).Result;
+            movieGenreVM.genres = movieVO.Genres;
+            movieGenreVM.movies = movieVO.Movies;
+            return View(movieGenreVM);
         }
 
         [Authorize]
