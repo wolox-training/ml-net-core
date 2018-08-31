@@ -1,16 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MlNetCore.Models;
-using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Mvc.Localization;
-using MlNetCore.Repositories.Database;
 using MlNetCore.Repositories.Interfaces;
 using MlNetCore.Models.Views;
 using Microsoft.AspNetCore.Authorization;
+using System;
 
 namespace MlNetCore.Controllers
 {
@@ -60,19 +55,26 @@ namespace MlNetCore.Controllers
         [Authorize]
         public IActionResult Edit(int? id)
         {
-            if (id == null)
+            try 
+            {
+                if (id == null)
+                    throw new Exception("Not Found"); 
+                var movie = UnitOfWork.MovieRepository.Get((int)id);
+                if (movie == null)
+                    throw new Exception("Not Found");
+                ViewData["Title"] = _localizer["EditMovie"];
+                MovieViewModel model = new MovieViewModel();
+                model.Id = movie.Id;
+                model.Genre = movie.Genre;
+                model.Price = movie.Price;
+                model.Title = movie.Title;
+                movie.ReleaseDate = movie.ReleaseDate;
+                return View(model);
+            }
+            catch (Exception e)
+            {
                 return NotFound();
-            var movie = UnitOfWork.MovieRepository.Get((int)id);
-            if (movie == null)
-                return NotFound();
-            ViewData["Title"] = _localizer["EditMovie"];
-            MovieViewModel model = new MovieViewModel();
-            model.Id = movie.Id;
-            model.Genre = movie.Genre;
-            model.Price = movie.Price;
-            model.Title = movie.Title;
-            movie.ReleaseDate = movie.ReleaseDate;
-            return View(model);
+            }
         }
 
         [Authorize]
@@ -115,7 +117,7 @@ namespace MlNetCore.Controllers
             UnitOfWork.Complete();
             return RedirectToAction("Index");
         }
-        
+
         [Authorize]
         public IActionResult Details(int? id)
         {
