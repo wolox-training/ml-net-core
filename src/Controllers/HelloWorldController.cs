@@ -50,7 +50,7 @@ namespace MlNetCore.Controllers
         public IActionResult CreateNewMovie(MovieViewModel viewMovie)
         {
             Movie movieModel = new Movie(viewMovie.Id, viewMovie.Title, viewMovie.ReleaseDate, 
-                                        viewMovie.Genre, viewMovie.Price);
+                                        viewMovie.Genre, viewMovie.Price, viewMovie.Rating);
             UnitOfWork.MovieRepository.Add(movieModel);
             UnitOfWork.Complete();
             return RedirectToAction("Index");
@@ -72,7 +72,7 @@ namespace MlNetCore.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult Edit(int id, [Bind("Id,Title,ReleaseDate,Genre,Price")] MovieViewModel model)
+        public IActionResult Edit(int id, [Bind("Id,Title,ReleaseDate,Genre,Price,Rating")] MovieViewModel model)
         {
             var movie = UnitOfWork.MovieRepository.Get((int)id);
             if (movie == null)
@@ -81,6 +81,7 @@ namespace MlNetCore.Controllers
             movie.ReleaseDate = model.ReleaseDate;
             movie.Price = model.Price;
             movie.Title = model.Title;
+            movie.Rating = model.Rating;
             UnitOfWork.MovieRepository.Update(movie);
             UnitOfWork.Complete();
             return RedirectToAction("Index");
@@ -145,6 +146,7 @@ namespace MlNetCore.Controllers
             model.Genre = movie.Genre;
             model.ReleaseDate = movie.ReleaseDate;
             model.Price = movie.Price;
+            model.Rating = movie.Rating;
             return model;
         }
     }

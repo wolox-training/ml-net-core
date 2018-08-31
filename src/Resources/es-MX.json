@@ -11,5 +11,6 @@
     "MovieTitle": "Título",
     "MovieGenre": "Género",
     "MovieRelDate": "Fecha de lanzamiento",
-    "MoviePrice": "Precio"
+    "MoviePrice": "Precio",
+    "MovieRating": "Puntaje"
 }

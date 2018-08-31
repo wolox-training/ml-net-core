@@ -11,6 +11,7 @@
     ViewData["MovieGenre"] = Localizer["MovieGenre"];
     ViewData["MovieRelDate"] = Localizer["MovieRelDate"];
     ViewData["MoviePrice"] = Localizer["MoviePrice"];
+    ViewData["MovieRating"] = Localizer["MovieRating"];
 }
 
 <h4>@ViewData["Title"]</h4>
@@ -19,6 +20,7 @@
     <li> @ViewData["MovieGenre"] @Html.DisplayFor(model => model.Genre)</li>
     <li> @ViewData["MovieRelDate"] @Html.DisplayFor(model => model.ReleaseDate)</li>
     <li> @ViewData["MoviePrice"]: @Html.DisplayFor(model => model.Price)</li>
+    <li> @ViewData["MovieRating"]: @Html.DisplayFor(model => model.Rating)</li>
 </ul>
  <button type ="button" class="btn btn-default">
     @Html.ActionLink(returnBtn, "Index")
