@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.Localization;
 using MlNetCore.Repositories.Database;
 using MlNetCore.Repositories.Interfaces;
 using MlNetCore.Models.Views;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MlNetCore.Controllers
 {
@@ -32,17 +33,21 @@ namespace MlNetCore.Controllers
             return View(UnitOfWork.MovieRepository.GetAll().ToList());
         }
 
+        [Authorize]
         public IActionResult Welcome(string name)
         {
             ViewData["Message"] = _localizer["ContactPage"];
             return View();
         }
 
+        [Authorize]
         public IActionResult NewMovie()
         {
             ViewData["Title"] = _localizer["NewMovie"];
             return View(new MovieViewModel());
         }
+
+        [Authorize]
         public IActionResult CreateNewMovie(MovieViewModel viewMovie)
         {
             Movie movieModel = new Movie(viewMovie.Id, viewMovie.Title, viewMovie.ReleaseDate, 
@@ -52,6 +57,7 @@ namespace MlNetCore.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
         public IActionResult Edit(int? id)
         {
             if (id == null)
@@ -69,6 +75,7 @@ namespace MlNetCore.Controllers
             return View(model);
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult Edit(int id, [Bind("Id,Title,ReleaseDate,Genre,Price")] MovieViewModel model)
         {
@@ -84,6 +91,7 @@ namespace MlNetCore.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
         public IActionResult Delete(int? id)
         {
             if (id == null)
@@ -96,6 +104,7 @@ namespace MlNetCore.Controllers
             return View(model);
         }
 
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         public IActionResult DeleteConfirmed(int id)
         {
@@ -106,7 +115,8 @@ namespace MlNetCore.Controllers
             UnitOfWork.Complete();
             return RedirectToAction("Index");
         }
-
+        
+        [Authorize]
         public IActionResult Details(int? id)
         {
             if(id == null)

@@ -3,8 +3,10 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Localization;
 using MlNetCore.Models;
 using MlNetCore.Models.Views;
+using MlNetCore.Repositories.Interfaces;
 
 namespace MlNetCore.Controllers
 {
@@ -12,11 +14,18 @@ namespace MlNetCore.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IHtmlLocalizer<HelloWorldController> _localizer;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        private IUnitOfWork UnitOfWork { get { return this._unitOfWork; } }
+
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager,
+                            IUnitOfWork unitOfWork, IHtmlLocalizer<HelloWorldController> localizer)
         {
             this._userManager = userManager;
             this._signInManager = signInManager;
+            this._unitOfWork = unitOfWork;
+            this._localizer = localizer;
         }
 
         public SignInManager<User> SignInManager
@@ -75,6 +84,7 @@ namespace MlNetCore.Controllers
             return View(loginViewModel);
         }
 
+        [Authorize]
         [HttpPost("Logout")]
         public async Task<IActionResult> Logout()
         {
@@ -83,6 +93,11 @@ namespace MlNetCore.Controllers
             return RedirectToAction("Index", "HelloWorld");
         }
 
-        
+        [Authorize]
+        [HttpPost("Register")]
+        public IActionResult Users()
+        {
+            return View(UnitOfWork.UserRepository.GetAll());
+        }
     }
 }
