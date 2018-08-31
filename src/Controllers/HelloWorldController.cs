@@ -18,6 +18,7 @@ namespace MlNetCore.Controllers
         private readonly IHtmlLocalizer<HelloWorldController> _localizer;
         private readonly IUnitOfWork _unitOfWork;
         private IUnitOfWork UnitOfWork { get{ return this._unitOfWork; } }
+
         public HelloWorldController(IUnitOfWork unitOfWork, IHtmlLocalizer<HelloWorldController> localizer)
         {
             this._unitOfWork = unitOfWork;
@@ -26,6 +27,7 @@ namespace MlNetCore.Controllers
 
         public IActionResult Index()
         {
+            ViewData["Title"] = _localizer["MovieList"];
             return View(UnitOfWork.MovieRepository.GetAll().ToList());
         }
 
@@ -37,6 +39,7 @@ namespace MlNetCore.Controllers
 
         public IActionResult NewMovie()
         {
+            ViewData["Title"] = _localizer["NewMovie"];
             return View(new MovieViewModel());
         }
         public IActionResult CreateNewMovie(MovieViewModel viewMovie)
@@ -46,6 +49,93 @@ namespace MlNetCore.Controllers
             UnitOfWork.MovieRepository.Add(movieModel);
             UnitOfWork.Complete();
             return RedirectToAction("Index");
+        }
+
+        public IActionResult Edit(int? id)
+        {
+            try
+            {
+                ViewData["Title"] = _localizer["EditMovie"];
+                return View(ViewModelSetup(id));
+            }
+            catch (Exception)
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpPost]
+        public IActionResult Edit(int id, [Bind("Id,Title,ReleaseDate,Genre,Price")] MovieViewModel model)
+        {
+            var movie = UnitOfWork.MovieRepository.Get((int)id);
+            if (movie == null)
+                return NotFound();
+            movie.Genre = model.Genre;
+            movie.ReleaseDate = model.ReleaseDate;
+            movie.Price = model.Price;
+            movie.Title = model.Title;
+            UnitOfWork.MovieRepository.Update(movie);
+            UnitOfWork.Complete();
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult Delete(int? id)
+        {
+            try
+            {
+                if (id == null)
+                    throw new Exception("Not Found");
+                var movie = UnitOfWork.MovieRepository.Get((int)id);
+                if (movie == null)
+                    throw new Exception("Not Found");
+                MovieViewModel model = new MovieViewModel();
+                model.Id = (int)id;
+                return View(model);
+            }
+            catch(Exception)
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            var movie = UnitOfWork.MovieRepository.Get((int)id);
+            if (movie == null)
+                return NotFound();
+            UnitOfWork.MovieRepository.Remove(movie);
+            UnitOfWork.Complete();
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult Details(int? id)
+        {
+            try
+            {
+                return View(ViewModelSetup(id));
+            }
+            catch(Exception)
+            {
+                return NotFound();
+            }
+        }
+
+        public MovieViewModel ViewModelSetup(int? id)
+        {
+            if (id == null)
+                throw new Exception("Not Found");
+            var movie = UnitOfWork.MovieRepository.Get((int)id);
+            if (movie == null)
+                throw new Exception("Not Found");
+            ViewData["Title"] = _localizer["DetailsMovie"];
+            MovieViewModel model = new MovieViewModel();
+            model.Id = movie.Id;
+            model.Title = movie.Title;
+            model.Genre = movie.Genre;
+            model.ReleaseDate = movie.ReleaseDate;
+            model.Price = movie.Price;
+            return model;
         }
     }
 }

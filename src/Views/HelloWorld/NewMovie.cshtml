@@ -1,8 +1,9 @@
 @using MlNetCore.Models.Views;
 @model  MovieViewModel
-@using (Html.BeginForm("CreateNewMovie","HelloWorld", FormMethod.Post, new { @class = "form-horizontal"}))
+
+@using (Html.BeginForm("CreateNewMovie" ,"HelloWorld", FormMethod.Post, new { @class = "form-horizontal"}))
 {
-    <h4>Create a new movie.</h4>
+    <h4>@ViewData["Title"]</h4>
     <div class="form-group">
         @Html.LabelFor(m => m.Title, new {@class = "col-md-2 control-label"})
         <div class="col-md-10">

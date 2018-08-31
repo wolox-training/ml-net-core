@@ -1,0 +1,25 @@
+@using MlNetCore.Models.Views;
+@model  MovieViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@using System.Globalization;
+
+@inject IViewLocalizer Localizer
+
+@{
+    string returnBtn = Localizer["ReturnMovieList"].Value;
+    ViewData["MovieTitle"] = Localizer["MovieTitle"];
+    ViewData["MovieGenre"] = Localizer["MovieGenre"];
+    ViewData["MovieRelDate"] = Localizer["MovieRelDate"];
+    ViewData["MoviePrice"] = Localizer["MoviePrice"];
+}
+
+<h4>@ViewData["Title"]</h4>
+<ul>
+    <li> @ViewData["MovieTitle"] @Html.DisplayFor(model => model.Title)</li>
+    <li> @ViewData["MovieGenre"] @Html.DisplayFor(model => model.Genre)</li>
+    <li> @ViewData["MovieRelDate"] @Html.DisplayFor(model => model.ReleaseDate)</li>
+    <li> @ViewData["MoviePrice"]: @Html.DisplayFor(model => model.Price)</li>
+</ul>
+ <button type ="button" class="btn btn-default">
+    @Html.ActionLink(returnBtn, "Index")
+</button>

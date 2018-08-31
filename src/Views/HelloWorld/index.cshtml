@@ -1,11 +1,7 @@
 @model IEnumerable<Movie>
 
-@{
-    ViewData["Title"] = "Movie List";
-}
-
-<h2>My Movie List</h2>
-<button>
+<h2>@ViewData["Title"]</h2>
+<button class="btn btn-sm btn-default" type ="button">
     <a asp-area="" asp-controller="HelloWorld" asp-action="NewMovie" class="navbar-brand">Create Movie</a>
 </button>
 <br><br>

@@ -1,5 +1,5 @@
 using System;
-
+using MlNetCore.Models;
 namespace MlNetCore.Models.Views
 {
     public class MovieViewModel
