@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MlNetCore.Repositories.Database;
+using MlNetCore.Repositories.Interfaces;
 
 namespace MlNetCore
 {
@@ -38,6 +39,7 @@ namespace MlNetCore
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddDbContext<DataBaseContext>(options =>  options.UseNpgsql(Configuration["ConnectionString"]));
             services.AddScoped<DataBaseContext>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddJsonLocalization(options => options.ResourcesPath = "Resources");
             services.AddMvc().AddViewLocalization();
             CultureInfo.CurrentCulture = new CultureInfo("es-MX");
