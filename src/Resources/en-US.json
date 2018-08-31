@@ -11,5 +11,6 @@
     "MovieTitle": "Title",
     "MovieGenre": "Genre",
     "MovieRelDate": "Release Date",
-    "MoviePrice": "Price"
+    "MoviePrice": "Price",
+    "MovieRating": "Rating"
 }

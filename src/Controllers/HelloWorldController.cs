@@ -40,6 +40,7 @@ namespace MlNetCore.Controllers
         }
 
         [Authorize]
+        [HttpGet]
         public IActionResult NewMovie()
         {
             ViewData["Title"] = _localizer["NewMovie"];
@@ -47,13 +48,18 @@ namespace MlNetCore.Controllers
         }
 
         [Authorize]
-        public IActionResult CreateNewMovie(MovieViewModel viewMovie)
+        [HttpPost]
+        public IActionResult NewMovie(MovieViewModel viewMovie)
         {
-            Movie movieModel = new Movie(viewMovie.Id, viewMovie.Title, viewMovie.ReleaseDate, 
+            if(ModelState.IsValid)
+            {
+                Movie movieModel = new Movie(viewMovie.Title, viewMovie.ReleaseDate, 
                                         viewMovie.Genre, viewMovie.Price, viewMovie.Rating);
-            UnitOfWork.MovieRepository.Add(movieModel);
-            UnitOfWork.Complete();
-            return RedirectToAction("Index");
+                UnitOfWork.MovieRepository.Add(movieModel);
+                UnitOfWork.Complete();
+                return RedirectToAction("Index");
+            }
+            return View(viewMovie);            
         }
 
         [Authorize]
@@ -122,6 +128,16 @@ namespace MlNetCore.Controllers
         [Authorize]
         public IActionResult Details(int? id)
         {
+            SmtpClient client = new SmtpClient("mysmtpserver");
+            client.UseDefaultCredentials = false;
+            client.Credentials = new NetworkCredential("username", "password");
+
+            MailMessage mailMessage = new MailMessage();
+            mailMessage.From = new MailAddress("lorant.mikolas@wolox.com.ar");
+            mailMessage.To.Add("lorant.mikolas@wolox.com.ar");
+            mailMessage.Body = "body";
+            mailMessage.Subject = "subject";
+            client.Send(mailMessage);
             try
             {
                 return View(ViewModelSetup(id));
