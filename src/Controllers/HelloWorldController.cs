@@ -55,26 +55,19 @@ namespace MlNetCore.Controllers
         [Authorize]
         public IActionResult Edit(int? id)
         {
-            try 
-            {
-                if (id == null)
-                    throw new Exception("Not Found"); 
-                var movie = UnitOfWork.MovieRepository.Get((int)id);
-                if (movie == null)
-                    throw new Exception("Not Found");
-                ViewData["Title"] = _localizer["EditMovie"];
-                MovieViewModel model = new MovieViewModel();
-                model.Id = movie.Id;
-                model.Genre = movie.Genre;
-                model.Price = movie.Price;
-                model.Title = movie.Title;
-                movie.ReleaseDate = movie.ReleaseDate;
-                return View(model);
-            }
-            catch (Exception e)
-            {
+            if (id == null)
+                return NotFound(); 
+            var movie = UnitOfWork.MovieRepository.Get((int)id);
+            if (movie == null)
                 return NotFound();
-            }
+            ViewData["Title"] = _localizer["EditMovie"];
+            MovieViewModel model = new MovieViewModel();
+            model.Id = movie.Id;
+            model.Genre = movie.Genre;
+            model.Price = movie.Price;
+            model.Title = movie.Title;
+            movie.ReleaseDate = movie.ReleaseDate;
+            return View(model);
         }
 
         [Authorize]

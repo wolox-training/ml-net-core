@@ -48,12 +48,12 @@ namespace MlNetCore.Controllers
        {
            if(ModelState.IsValid)
            {
-               var user = new User { UserName = userViewModel.UserName,
-               Email = userViewModel.Email};
-               var result = await UserManager.CreateAsync(user, userViewModel.Password);
-               if(result.Succeeded)
-               {
-                   await SignInManager.SignInAsync(user, true);
+                var user = new User { UserName = userViewModel.UserName,
+                Email = userViewModel.Email};
+                var result = await UserManager.CreateAsync(user, userViewModel.Password);
+                if(result.Succeeded)
+                {
+                    await SignInManager.SignInAsync(user, true);
                     return RedirectToAction("Users", "Account");
                 }
                 else foreach (var error in result.Errors) ModelState.AddModelError(string.Empty, error.Description);
@@ -94,7 +94,7 @@ namespace MlNetCore.Controllers
         }
 
         [Authorize]
-        [HttpPost("Register")]
+        [HttpGet("Users")]
         public IActionResult Users()
         {
             return View(UnitOfWork.UserRepository.GetAll());
