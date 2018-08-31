@@ -7,5 +7,9 @@
     "DeleteMovie": "Borrar Película",
     "DetailsMovie": "Detalles de la Película",
     "MovieList": "Movie List",
-    "ReturnMovieList": "Volver a Lista de Películas"
+    "ReturnMovieList": "Volver a Lista de Películas",
+    "MovieTitle": "Título",
+    "MovieGenre": "Género",
+    "MovieRelDate": "Fecha de lanzamiento",
+    "MoviePrice": "Precio"
 }

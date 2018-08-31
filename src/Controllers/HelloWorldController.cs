@@ -54,19 +54,15 @@ namespace MlNetCore.Controllers
 
         public IActionResult Edit(int? id)
         {
-            if (id == null)
+            try
+            {
+                ViewData["Title"] = _localizer["EditMovie"];
+                return View(ViewModelSetup(id));
+            }
+            catch (Exception)
+            {
                 return NotFound();
-            var movie = UnitOfWork.MovieRepository.Get((int)id);
-            if (movie == null)
-                return NotFound();
-            ViewData["Title"] = _localizer["EditMovie"];
-            MovieViewModel model = new MovieViewModel();
-            model.Id = movie.Id;
-            model.Genre = movie.Genre;
-            model.Price = movie.Price;
-            model.Title = movie.Title;
-            movie.ReleaseDate = movie.ReleaseDate;
-            return View(model);
+            }
         }
 
         [HttpPost]
@@ -86,14 +82,21 @@ namespace MlNetCore.Controllers
 
         public IActionResult Delete(int? id)
         {
-            if (id == null)
+            try
+            {
+                if (id == null)
+                    throw new Exception("Not Found");
+                var movie = UnitOfWork.MovieRepository.Get((int)id);
+                if (movie == null)
+                    throw new Exception("Not Found");
+                MovieViewModel model = new MovieViewModel();
+                model.Id = (int)id;
+                return View(model);
+            }
+            catch(Exception)
+            {
                 return NotFound();
-            var movie = UnitOfWork.MovieRepository.Get((int)id);
-            if (movie == null)
-                return NotFound();
-            MovieViewModel model = new MovieViewModel();
-            model.Id = (int) id;
-            return View(model);
+            }
         }
 
         [HttpPost, ActionName("Delete")]
@@ -109,18 +112,31 @@ namespace MlNetCore.Controllers
 
         public IActionResult Details(int? id)
         {
-            if(id == null)
+            try
+            {
+                return View(ViewModelSetup(id));
+            }
+            catch(Exception)
+            {
                 return NotFound();
-            var movie = UnitOfWork.MovieRepository.Get((int) id);
+            }
+        }
+
+        public MovieViewModel ViewModelSetup(int? id)
+        {
+            if (id == null)
+                throw new Exception("Not Found");
+            var movie = UnitOfWork.MovieRepository.Get((int)id);
             if (movie == null)
-                return NotFound();
+                throw new Exception("Not Found");
             ViewData["Title"] = _localizer["DetailsMovie"];
             MovieViewModel model = new MovieViewModel();
+            model.Id = movie.Id;
             model.Title = movie.Title;
             model.Genre = movie.Genre;
             model.ReleaseDate = movie.ReleaseDate;
             model.Price = movie.Price;
-            return View(model);
+            return model;
         }
     }
 }

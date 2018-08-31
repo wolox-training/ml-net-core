@@ -7,5 +7,9 @@
     "DeleteMovie": "Delete Movie",
     "DetailsMovie": "Movie Details",
     "MovieList": "Movie List",
-    "ReturnMovieList": "Return to Movie List"
+    "ReturnMovieList": "Return to Movie List",
+    "MovieTitle": "Title",
+    "MovieGenre": "Genre",
+    "MovieRelDate": "Release Date",
+    "MoviePrice": "Price"
 }
