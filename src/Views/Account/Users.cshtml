@@ -1,13 +1,21 @@
 @using MlNetCore.Models
 @model IEnumerable<User>
+@using Microsoft.AspNetCore.Mvc.Localization
+@using System.Globalization;
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Username"] = Localizer["Username"];
+    ViewData["Email"] = Localizer["Email"];
+}
 
 <h2>@ViewData["Title"]</h2>
 <h4>This are the users:</h4>
 <table class="table col-md-12">
     <thead>
         <tr>
-            <th>Username</th>
-            <th>Email</th>
+            <th>@ViewData["Username"]</th>
+            <th>@ViewData["Email"]</th>
         </tr>
     </thead>
     <tbody>

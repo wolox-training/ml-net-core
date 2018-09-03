@@ -12,5 +12,7 @@
     "MovieGenre": "Género",
     "MovieRelDate": "Fecha de lanzamiento",
     "MoviePrice": "Precio",
-    "MovieRating": "Puntaje"
+    "MovieRating": "Puntaje",
+    "Username": "Nombre de Usuario",
+    "Email": "Correo Electrónico"
 }
