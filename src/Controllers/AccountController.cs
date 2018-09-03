@@ -65,7 +65,6 @@ namespace MlNetCore.Controllers
         [HttpGet("Login")]
         public async Task<IActionResult> Login()
         {
-            //WHY?
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
             var viewModel = new LoginViewModel();
             return View(viewModel);
@@ -88,7 +87,6 @@ namespace MlNetCore.Controllers
         [HttpPost("Logout")]
         public async Task<IActionResult> Logout()
         {
-            //WHY?
             await SignInManager.SignOutAsync();
             return RedirectToAction("Index", "HelloWorld");
         }

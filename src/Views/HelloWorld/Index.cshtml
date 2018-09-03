@@ -6,7 +6,11 @@
 @inject IViewLocalizer Localizer
 
 @{
+    ViewData["MovieGenre"] = Localizer["MovieGenre"];
     ViewData["MovieTitle"] = Localizer["MovieTitle"];
+    ViewData["MovieRelDate"] = Localizer["MovieRelDate"];
+    ViewData["MoviePrice"] = Localizer["MoviePrice"];
+    ViewData["Rating"] = Localizer["Rating"];
 }
 
 @if (!SignInManager.IsSignedIn(User))
