@@ -11,6 +11,8 @@
     ViewData["MovieRelDate"] = Localizer["MovieRelDate"];
     ViewData["MoviePrice"] = Localizer["MoviePrice"];
     ViewData["Rating"] = Localizer["Rating"];
+    ViewData["NextPage"] = Localizer["NextPage"];
+    ViewData["PrevPage"] = Localizer["PrevPage"];
 }
 
 @if (!SignInManager.IsSignedIn(User))
@@ -26,10 +28,10 @@ else
     <br><br>
     <form asp-controller="HelloWorld" asp-action="Index" method="get" class="container">
         <p>
-            <select asp-for="movieGenre" asp-items="Model.genres">
+            <select asp-for="MovieGenre" asp-items="Model.Genres">
                 <option value="">All</option>
             </select>
-            @ViewData["MovieTitle"]: <input type="text" name="SearchString">
+            @ViewData["MovieTitle"]: <input type="text" name="SearchString" value="@Model.CurrentFilter">
             <input type="submit" value="Filter" />
         </p>
     </form>
@@ -38,15 +40,30 @@ else
     <table class="table col-md-12">
         <thead>
             <tr>
-                <th>@Html.DisplayNameFor(model => model.movies[0].Title)</th>
-                <th>@Html.DisplayNameFor(model => model.movies[0].ReleaseDate)</th>
-                <th>@Html.DisplayNameFor(model => model.movies[0].Genre)</th>
-                <th>@Html.DisplayNameFor(model => model.movies[0].Price)</th>
-                <th>@Html.DisplayNameFor(model => model.movies[0].Rating)</th>
+                <th>
+                    <a asp-controller="HelloWorld" asp-action="Index" asp-route-sortOrder="@Model.TitleSort"
+                    asp-route-currentFilter="@Model.CurrentFilter">
+                    @Html.DisplayNameFor(model => model.Movies[0].Title)
+                    </a>
+                </th>
+                <th>
+                    <a asp-controller="HelloWorld" asp-action="Index" asp-route-sortOrder="@Model.DateSort"
+                    asp-route-currentFilter="@Model.CurrentFilter">
+                        @Html.DisplayNameFor(model => model.Movies[0].ReleaseDate)
+                    </a>
+                </th>
+                <th>
+                    <a asp-controller="HelloWorld" asp-action="Index" asp-route-sortOrder="@Model.GenreSort"
+                    asp-route-currentFilter="@Model.CurrentFilter">
+                        @Html.DisplayNameFor(model => model.Movies[0].Genre)
+                    </a>
+                </th>
+                <th>@Html.DisplayNameFor(model => model.Movies[0].Price)</th>
+                <th>@Html.DisplayNameFor(model => model.Movies[0].Rating)</th>
             </tr>
         </thead>
         <tbody>
-    @foreach (var item in Model.movies) {
+    @foreach (var item in Model.Movies) {
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Title)
@@ -72,4 +89,24 @@ else
     }
         </tbody>
     </table>
+
+    
+    var prevDisabled = !Model.Movies.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.Movies.HasNextPage ? "disabled" : "";
+    
+
+    <a asp-controller="HelloWorld" asp-action="Index"
+    asp-route-sortOrder="@Model.CurrentSort"
+    asp-route-pageIndex="@(Model.Movies.PageIndex - 1)"
+    asp-route-currentFilter="@Model.CurrentFilter"
+    class="btn btn-default @prevDisabled">
+        @ViewData["PrevPage"]
+    </a>
+    <a asp-controller="HelloWorld" asp-action="Index"
+        asp-route-sortOrder="@Model.CurrentSort"
+        asp-route-pageIndex="@(Model.Movies.PageIndex + 1)"
+        asp-route-currentFilter="@Model.CurrentFilter"
+        class="btn btn-default @nextDisabled">
+        @ViewData["NextPage"]
+    </a>
 }

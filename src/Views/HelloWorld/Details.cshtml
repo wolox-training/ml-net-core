@@ -12,6 +12,7 @@
     ViewData["MovieRelDate"] = Localizer["MovieRelDate"];
     ViewData["MoviePrice"] = Localizer["MoviePrice"];
     ViewData["MovieRating"] = Localizer["MovieRating"];
+    string send = Localizer["Send"].Value;
 }
 
 <h4>@ViewData["Title"]</h4>
@@ -24,4 +25,7 @@
 </ul>
  <button type ="button" class="btn btn-default">
     @Html.ActionLink(returnBtn, "Index")
+</button>
+ <button type ="button" class="btn btn-default">
+    @Html.ActionLink(send, "Send")
 </button>

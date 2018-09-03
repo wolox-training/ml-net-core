@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using MlNetCore.Repositories;
 
 namespace MlNetCore.Models.VO
 {
@@ -10,7 +11,7 @@ namespace MlNetCore.Models.VO
             get; set;
         }
 
-        public List<Movie> Movies
+        public PaginatedList<Movie> Movies
         {
             get; set;
         }

@@ -7,6 +7,9 @@ using MlNetCore.Models.Views;
 using Microsoft.AspNetCore.Authorization;
 using System;
 using MlNetCore.Models.VO;
+using System.Net.Mail;
+using System.Net;
+using MlNetCore.Mail;
 
 namespace MlNetCore.Controllers
 {
@@ -22,13 +25,18 @@ namespace MlNetCore.Controllers
             this._localizer = localizer;
         }
 
-        public IActionResult Index(string movieGenre, string searchString)
+        public IActionResult Index(string movieGenre, string searchString, string sortOrder, int? pageIndex)
         {
             ViewData["Title"] = _localizer["MovieList"];
             var movieGenreVM = new MovieGenreViewModel();
-            MovieVO movieVO = UnitOfWork.MovieRepository.GetFiltered(movieGenre, searchString).Result;
-            movieGenreVM.genres = movieVO.Genres;
-            movieGenreVM.movies = movieVO.Movies;
+            movieGenreVM.TitleSort = String.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
+            movieGenreVM.DateSort = sortOrder == "Date" ? "reldate_desc" : "Date";
+            movieGenreVM.GenreSort = sortOrder == "Genre" ? "genre_desc" : "Genre";
+            movieGenreVM.CurrentSort = sortOrder;
+            movieGenreVM.CurrentFilter = searchString;
+            MovieVO movieVO = UnitOfWork.MovieRepository.GetFilteredWithOrder(movieGenre, searchString, sortOrder, pageIndex).Result;
+            movieGenreVM.Genres = movieVO.Genres;
+            movieGenreVM.Movies = movieVO.Movies;
             return View(movieGenreVM);
         }
 
@@ -128,16 +136,6 @@ namespace MlNetCore.Controllers
         [Authorize]
         public IActionResult Details(int? id)
         {
-            SmtpClient client = new SmtpClient("mysmtpserver");
-            client.UseDefaultCredentials = false;
-            client.Credentials = new NetworkCredential("username", "password");
-
-            MailMessage mailMessage = new MailMessage();
-            mailMessage.From = new MailAddress("lorant.mikolas@wolox.com.ar");
-            mailMessage.To.Add("lorant.mikolas@wolox.com.ar");
-            mailMessage.Body = "body";
-            mailMessage.Subject = "subject";
-            client.Send(mailMessage);
             try
             {
                 return View(ViewModelSetup(id));
@@ -146,6 +144,12 @@ namespace MlNetCore.Controllers
             {
                 return NotFound();
             }
+        }
+
+        public IActionResult Send(int? id)
+        {
+            Mailer.Send("lorant.mikolas@wolox.com.ar", "subject", "the body");
+            return RedirectToAction("Details", id);
         }
 
         public MovieViewModel ViewModelSetup(int? id)

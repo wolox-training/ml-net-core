@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
@@ -59,6 +60,9 @@ namespace MlNetCore.Mail
                 Subject = subject,
             };
             mailMessage.To.Add(toAddress);
+            mailMessage.To.ToList().ForEach( 
+                toMail => 
+                    Console.WriteLine(toMail));
             client.Send(mailMessage);
         }
 
