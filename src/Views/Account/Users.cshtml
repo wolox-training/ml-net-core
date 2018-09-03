@@ -1,0 +1,33 @@
+@using MlNetCore.Models
+@model IEnumerable<User>
+@using Microsoft.AspNetCore.Mvc.Localization
+@using System.Globalization;
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Username"] = Localizer["Username"];
+    ViewData["Email"] = Localizer["Email"];
+}
+
+<h2>@ViewData["Title"]</h2>
+<h4>This are the users:</h4>
+<table class="table col-md-12">
+    <thead>
+        <tr>
+            <th>@ViewData["Username"]</th>
+            <th>@ViewData["Email"]</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,60 @@
+@model IEnumerable<Movie>
+@inject SignInManager<User> SignInManager
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.Localization
+@using System.Globalization;
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["MovieGenre"] = Localizer["MovieGenre"];
+    ViewData["MovieTitle"] = Localizer["MovieTitle"];
+    ViewData["MovieRelDate"] = Localizer["MovieRelDate"];
+    ViewData["MoviePrice"] = Localizer["MoviePrice"];
+}
+
+@if (!SignInManager.IsSignedIn(User))
+{
+    <h2>Sign in to see more information.</h2>
+}
+else
+{
+    <h2>@ViewData["Title"]</h2>
+    <button class="btn btn-sm btn-default" type ="button">
+        <a asp-area="" asp-controller="HelloWorld" asp-action="NewMovie" class="navbar-brand">Create Movie</a>
+    </button>
+    <br><br>
+    <h4>This are the movies:</h4>
+    <table class="table col-md-12">
+        <thead>
+            <tr>
+                <th>@ViewData["MovieTitle"]</th>
+                <th>@ViewData["MovieRelDate"]</th>
+                <th>@ViewData["MovieGenre"]</th>
+                <th>@ViewData["MoviePrice"]</th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReleaseDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Genre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>
+}

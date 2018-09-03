@@ -1,0 +1,40 @@
+@using Microsoft.AspNetCore.Identity;
+@using MlNetCore.Models.Views
+@using MlNetCore.Models
+@model UserViewModel
+
+
+<h4>
+    @ViewData["Title"]
+</h4>
+@using (Html.BeginForm("Register", "Account", FormMethod.Post))
+{
+    <div asp-validation-summary="All"></div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.UserName, new {@class = "col-md-2 control-label"})
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.UserName, new {@class = "form-control"})
+        </div>
+    </div>
+    <div class='form-group'>
+         @Html.LabelFor(model => model.Email, new {@class = "col-md-2 control-label"})
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.Email, new {@class = "form-control"})
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Password, new {@class = "col-md-2 control-label"})
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.Password, new {@class = "form-control"})
+        </div>
+    </div>
+    <div class='form-group'>
+        @Html.LabelFor(model => model.ConfirmPassword, new {@class = "col-md-2 control-label"})
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.ConfirmPassword, new {@class = "form-control"})
+        </div>
+    </div>
+    <div>
+        <input type="submit" value="Register"/>
+    </div>
+}
