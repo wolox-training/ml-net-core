@@ -65,7 +65,6 @@ namespace MlNetCore.Controllers
         [HttpGet("Login")]
         public async Task<IActionResult> Login()
         {
-            //WHY?
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
             var viewModel = new LoginViewModel();
             return View(viewModel);
@@ -78,7 +77,7 @@ namespace MlNetCore.Controllers
             if (ModelState.IsValid)
             {
                 var result = await SignInManager.PasswordSignInAsync(loginViewModel.UserName, loginViewModel.Password, true, false);
-                if (result.Succeeded) return RedirectToAction("Users", "UserManagement");
+                if (result.Succeeded) return RedirectToAction("Users", "Account");
                 ModelState.AddModelError(string.Empty, "Invalid login attempt.");
             }
             return View(loginViewModel);
@@ -88,7 +87,6 @@ namespace MlNetCore.Controllers
         [HttpPost("Logout")]
         public async Task<IActionResult> Logout()
         {
-            //WHY?
             await SignInManager.SignOutAsync();
             return RedirectToAction("Index", "HelloWorld");
         }

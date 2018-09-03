@@ -11,5 +11,7 @@
     "MovieTitle": "Título",
     "MovieGenre": "Género",
     "MovieRelDate": "Fecha de lanzamiento",
-    "MoviePrice": "Precio"
+    "MoviePrice": "Precio",
+    "Username": "Nombre de Usuario",
+    "Email": "Correo Electrónico"
 }

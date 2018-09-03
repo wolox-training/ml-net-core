@@ -1,6 +1,16 @@
 @model IEnumerable<Movie>
 @inject SignInManager<User> SignInManager
 @using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.Localization
+@using System.Globalization;
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["MovieGenre"] = Localizer["MovieGenre"];
+    ViewData["MovieTitle"] = Localizer["MovieTitle"];
+    ViewData["MovieRelDate"] = Localizer["MovieRelDate"];
+    ViewData["MoviePrice"] = Localizer["MoviePrice"];
+}
 
 @if (!SignInManager.IsSignedIn(User))
 {
@@ -17,10 +27,10 @@ else
     <table class="table col-md-12">
         <thead>
             <tr>
-                <th>Title</th>
-                <th>Release Date</th>
-                <th>Genre</th>
-                <th>Price</th>
+                <th>@ViewData["MovieTitle"]</th>
+                <th>@ViewData["MovieRelDate"]</th>
+                <th>@ViewData["MovieGenre"]</th>
+                <th>@ViewData["MoviePrice"]</th>
             </tr>
         </thead>
         <tbody>
