@@ -1,8 +1,8 @@
-@model IEnumerable<Movie>
-@inject SignInManager<User> SignInManager
-@using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.Mvc.Localization
 @using System.Globalization;
+@model MlNetCore.Models.Views.MovieGenreViewModel
+@inject SignInManager<User> SignInManager
+@using Microsoft.AspNetCore.Identity
 @inject IViewLocalizer Localizer
 
 @{
@@ -10,6 +10,7 @@
     ViewData["MovieTitle"] = Localizer["MovieTitle"];
     ViewData["MovieRelDate"] = Localizer["MovieRelDate"];
     ViewData["MoviePrice"] = Localizer["MoviePrice"];
+    ViewData["Rating"] = Localizer["Rating"];
 }
 
 @if (!SignInManager.IsSignedIn(User))
@@ -23,18 +24,29 @@ else
         <a asp-area="" asp-controller="HelloWorld" asp-action="NewMovie" class="navbar-brand">Create Movie</a>
     </button>
     <br><br>
+    <form asp-controller="HelloWorld" asp-action="Index" method="get" class="container">
+        <p>
+            <select asp-for="movieGenre" asp-items="Model.genres">
+                <option value="">All</option>
+            </select>
+            @ViewData["MovieTitle"]: <input type="text" name="SearchString">
+            <input type="submit" value="Filter" />
+        </p>
+    </form>
+    <br><br>
     <h4>This are the movies:</h4>
     <table class="table col-md-12">
         <thead>
             <tr>
-                <th>@ViewData["MovieTitle"]</th>
-                <th>@ViewData["MovieRelDate"]</th>
-                <th>@ViewData["MovieGenre"]</th>
-                <th>@ViewData["MoviePrice"]</th>
+                <th>@Html.DisplayNameFor(model => model.movies[0].Title)</th>
+                <th>@Html.DisplayNameFor(model => model.movies[0].ReleaseDate)</th>
+                <th>@Html.DisplayNameFor(model => model.movies[0].Genre)</th>
+                <th>@Html.DisplayNameFor(model => model.movies[0].Price)</th>
+                <th>@Html.DisplayNameFor(model => model.movies[0].Rating)</th>
             </tr>
         </thead>
         <tbody>
-    @foreach (var item in Model) {
+    @foreach (var item in Model.movies) {
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Title)
@@ -47,6 +59,9 @@ else
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rating)
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
