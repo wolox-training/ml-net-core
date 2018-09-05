@@ -149,7 +149,7 @@ namespace MlNetCore.Controllers
         public IActionResult Send(int? id)
         {
             Mailer.Send("lorant.mikolas@wolox.com.ar", "subject", "the body");
-            return RedirectToAction("Details", id);
+            return RedirectToAction("Index");
         }
 
         public MovieViewModel ViewModelSetup(int? id)
