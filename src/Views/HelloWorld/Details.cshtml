@@ -12,6 +12,7 @@
     ViewData["MovieRelDate"] = Localizer["MovieRelDate"];
     ViewData["MoviePrice"] = Localizer["MoviePrice"];
     ViewData["MovieRating"] = Localizer["MovieRating"];
+    ViewData["Comments"] = Localizer["Comments"];
     string send = Localizer["Send"].Value;
 }
 
@@ -23,6 +24,33 @@
     <li> @ViewData["MoviePrice"]: @Html.DisplayFor(model => model.Price)</li>
     <li> @ViewData["MovieRating"]: @Html.DisplayFor(model => model.Rating)</li>
 </ul>
+<h4>@ViewData["Comments"]:</h4>
+ @foreach (var item in Model.Comments) {
+    <div class="container">
+            @Html.DisplayFor(modelItem => item.Text)
+    </div>
+    <hr>
+}
+@using (Html.BeginForm("NewComment" ,"HelloWorld", FormMethod.Post, new { @class = "form-horizontal"}))
+{
+   
+    
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    @Html.HiddenFor(m => m.Id)
+    <div class="form-group">
+        @Html.LabelFor(m => m.Comment, new {@class = "col-md-2 control-label"})
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Comment, new {@class = "form-control"})
+            <span asp-validation-for="Comment" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-off-set-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Submit comment" />
+        </div>
+    </div> 
+}
+
  <button type ="button" class="btn btn-default">
     @Html.ActionLink(returnBtn, "Index")
 </button>

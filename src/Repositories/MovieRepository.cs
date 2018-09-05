@@ -13,7 +13,7 @@ namespace MlNetCore.Repositories
 {
     public class MovieRepository : Repository<Movie>, IMovieRepository
     {
-        public MovieRepository(DbContext context) : base(context)
+        public MovieRepository(DataBaseContext context) : base(context)
         {
         }
 
@@ -67,6 +67,10 @@ namespace MlNetCore.Repositories
                  movies.AsNoTracking(), pageIndex ?? 1, pageSize); 
             vo.Genres = new SelectList(await genreQuery.Distinct().ToListAsync());
             return vo;
+        }
+
+        public Movie GetMovieWithComments(int id) {
+            return Context.Movies.Where(m => m.Id == id).Include(m => m.Comments).FirstOrDefault();
         }
     }
 }

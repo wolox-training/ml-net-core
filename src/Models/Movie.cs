@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -39,5 +40,7 @@ namespace MlNetCore.Models
         [StringLength(5)]
         [Required]
         public string Rating { get; set; }
+
+        public ICollection<Comment> Comments { get; set; }
     }
 }

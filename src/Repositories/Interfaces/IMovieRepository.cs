@@ -7,5 +7,6 @@ namespace MlNetCore.Repositories.Interfaces
     public interface IMovieRepository : IRepository<Movie>
     {
         Task<MovieVO> GetFilteredWithOrder(string movieGenre, string searchString, string sortOrder, int? pageIndex);
+        Movie GetMovieWithComments(int id);
     }
 }
