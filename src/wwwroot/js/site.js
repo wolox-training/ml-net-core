@@ -2,36 +2,53 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
-$(document).ready(function () {
+$(document).ready(function() {
+    if($('#movie-id').val())
+    {
+        loadData();
+        $("#comment-submit").click(function () {
+            newComment();
+        })
+    }
+});
+
+function loadData() {
     $.ajax({
-        type: "GET",
-        url: "/api/v1/CommentAPIController/GetAllComments",
-        contentType: "application/json; charset=utf-8",
+        url: "/api/v1/Comment/ListComments/" + $('#movie-id').val(),
+        type:"GET",
+        contentType: "application/json;charset=utf-8",
         dataType: "json",
-        success: function (data) {
-            //alert(JSON.stringify(data));                  
-            $("#DIV").html('');
-            var DIV = '';
-            $.each(data, function (i, item) {
-                var rows = "<tr>" +
-                    "<td id='RegdNo'>" + item.regNo + "</td>" +
-                    "<td id='Name'>" + item.name + "</td>" +
-                    "<td id='Address'>" + item.address + "</td>" +
-                    "<td id='PhoneNo'>" + item.phoneNo + "</td>" +
-                    "<td id='AdmissionDate'>" + Date(item.admissionDate,
-                        "dd-MM-yyyy") + "</td>" +
-                    "</tr>";
-                $('#Table').append(rows);
-            }); //End of foreach Loop   
-            console.log(data);
-        }, //End of AJAX Success function  
-
-        failure: function (data) {
-            alert(data.responseText);
-        }, //End of AJAX failure function  
-        error: function (data) {
-            alert(data.responseText);
-        } //End of AJAX error function  
-
+        success: function(result) {
+            var html = '';
+            $.each(result, function (index, value) {
+                html += '<div class="container">';
+                html += value.text;
+                html += '</div>';
+                html += '<hr>';
+            });
+            $('.comment-component').html(html);
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
     });
-});  
+}
+
+function newComment() {
+    $.ajax({
+        url: "/api/v1/Comment/NewComment",
+        type: "POST",
+        data: { 
+            movieId: $('#movie-id').val(),
+            viewComment: $('#new-comment').val()
+        },
+        dataType: "json",
+        success: function (result) {
+            alert("New comment added");
+            loadData();
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+}

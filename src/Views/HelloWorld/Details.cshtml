@@ -25,32 +25,26 @@
     <li> @ViewData["MovieRating"]: @Html.DisplayFor(model => model.Rating)</li>
 </ul>
 <h4>@ViewData["Comments"]:</h4>
- @foreach (var item in Model.Comments) {
-    <div class="container">
-            @Html.DisplayFor(modelItem => item.Text)
-    </div>
-    <hr>
-}
-@using (Html.BeginForm("NewComment" ,"HelloWorld", FormMethod.Post, new { @class = "form-horizontal"}))
-{
-   
-    
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    @Html.HiddenFor(m => m.Id)
-    <div class="form-group">
-        @Html.LabelFor(m => m.Comment, new {@class = "col-md-2 control-label"})
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Comment, new {@class = "form-control"})
-            <span asp-validation-for="Comment" class="text-danger"></span>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-off-set-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Submit comment" />
-        </div>
-    </div> 
-}
+ 
+<div class="comment-component container"></div>
+<br>
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
+@Html.HiddenFor(m => m.Id, new {@id = "movie-id"})
+<div class="form-group">
+    @Html.LabelFor(m => m.Comment, new {@class = "col-md-2 control-label"})
+    <div class="col-md-10">
+        @Html.TextBoxFor(m => m.Comment, new {@id= "new-comment", @class = "form-control"})
+        <span asp-validation-for="Comment" class="text-danger"></span>
+    </div>
+</div>
+<br>
+<div class="form-group">
+    <div class="col-md-off-set-2 col-md-10">
+        <input id="comment-submit" class="btn btn-default" value="Submit comment" />
+    </div>
+</div> 
+<br>
  <button type ="button" class="btn btn-default">
     @Html.ActionLink(returnBtn, "Index")
 </button>

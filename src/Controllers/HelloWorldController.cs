@@ -13,6 +13,7 @@ using MlNetCore.Mail;
 
 namespace MlNetCore.Controllers
 {
+    [Route("[controller]")]
     public class HelloWorldController : Controller
     {
         private readonly IHtmlLocalizer<HelloWorldController> _localizer;
@@ -25,6 +26,7 @@ namespace MlNetCore.Controllers
             this._localizer = localizer;
         }
 
+        [HttpGet("")]
         public IActionResult Index(string movieGenre, string searchString, string sortOrder, int? pageIndex)
         {
             ViewData["Title"] = _localizer["MovieList"];
@@ -41,6 +43,7 @@ namespace MlNetCore.Controllers
         }
 
         [Authorize]
+        [HttpGet("welcome")]
         public IActionResult Welcome(string name)
         {
             ViewData["Message"] = _localizer["ContactPage"];
@@ -48,7 +51,7 @@ namespace MlNetCore.Controllers
         }
 
         [Authorize]
-        [HttpGet]
+        [HttpGet("newmovie")]
         public IActionResult NewMovie()
         {
             ViewData["Title"] = _localizer["NewMovie"];
@@ -56,7 +59,7 @@ namespace MlNetCore.Controllers
         }
 
         [Authorize]
-        [HttpPost]
+        [HttpPost("newmovie")]
         public IActionResult NewMovie(MovieViewModel viewMovie)
         {
             if(ModelState.IsValid)
@@ -71,6 +74,7 @@ namespace MlNetCore.Controllers
         }
 
         [Authorize]
+        [HttpGet("Edit/{id}")]
         public IActionResult Edit(int? id)
         {
             try
@@ -85,7 +89,7 @@ namespace MlNetCore.Controllers
         }
 
         [Authorize]
-        [HttpPost]
+        [HttpPost("Edit/{id}")]
         public IActionResult Edit(int id, [Bind("Id,Title,ReleaseDate,Genre,Price,Rating")] MovieViewModel model)
         {
             var movie = UnitOfWork.MovieRepository.Get((int)id);
@@ -102,6 +106,7 @@ namespace MlNetCore.Controllers
         }
 
         [Authorize]
+        [HttpGet("delete/{id}")]
         public IActionResult Delete(int? id)
         {
             try
@@ -122,20 +127,22 @@ namespace MlNetCore.Controllers
         }
 
         [Authorize]
-        [HttpPost, ActionName("Delete")]
+        [HttpPost("Delete/{id}")]
         public IActionResult DeleteConfirmed(int id)
         {
-            var movie = UnitOfWork.MovieRepository.Get((int)id);
+            var movie = UnitOfWork.MovieRepository.GetMovieWithComments((int)id);
             if (movie == null)
                 return NotFound();
-            UnitOfWork.MovieRepository.Remove(movie);
+            UnitOfWork.MovieRepository.RemoveMovieCascade(movie);
             UnitOfWork.Complete();
             return RedirectToAction("Index");
         }
 
         [Authorize]
+        [HttpGet("Details/{id}")]
         public IActionResult Details(int? id)
         {
+            
             try
             {
                 return View(DetailViewSetup(id));
@@ -146,13 +153,14 @@ namespace MlNetCore.Controllers
             }
         }
 
+        [HttpGet("send")]
         public IActionResult Send(int? id)
         {
             Mailer.Send("lorant.tester@gmail.com", "subject", "the body");
             return RedirectToAction("Index");
         }
 
-        public MovieViewModel DetailViewSetup(int? id)
+        private MovieViewModel DetailViewSetup(int? id)
         {
             if (id == null)
                 throw new Exception("Not Found");
@@ -164,7 +172,7 @@ namespace MlNetCore.Controllers
                                     movie.Price, movie.Rating, movie.Comments);
         }
 
-        public MovieViewModel EditViewSetup(int? id)
+        private MovieViewModel EditViewSetup(int? id)
         {
             if (id == null)
                 throw new Exception("Not Found");
@@ -174,16 +182,6 @@ namespace MlNetCore.Controllers
             ViewData["Title"] = _localizer["EditMovie"];
             return new MovieViewModel(movie.Id, movie.Title, movie.ReleaseDate, 
                                     movie.Price, movie.Rating);
-        }
-
-        public IActionResult NewComment(MovieViewModel model)
-        {
-            Comment comment = new Comment();
-            comment.Movie = UnitOfWork.MovieRepository.Get(model.Id);
-            comment.Text = model.Comment;
-            UnitOfWork.CommentRepository.Add(comment);
-            UnitOfWork.Complete();
-            return RedirectToAction("Details", new { id = model.Id });
         }
     }
 }

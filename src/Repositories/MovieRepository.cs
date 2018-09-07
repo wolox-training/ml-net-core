@@ -72,5 +72,12 @@ namespace MlNetCore.Repositories
         public Movie GetMovieWithComments(int id) {
             return Context.Movies.Where(m => m.Id == id).Include(m => m.Comments).FirstOrDefault();
         }
+
+
+        public void RemoveMovieCascade(Movie movie)
+        {
+            Context.Set<Comment>().RemoveRange(movie.Comments);
+            Remove(movie);
+        }
     }
 }
