@@ -34,9 +34,6 @@ function loadData() {
     });
 }
 
-/*based on mvc ajax tutorial
-https://dzone.com/articles/crud-operation-in-aspnet-mvc-using-ajax-and-bootst*/
-
 function newComment() {
     $.ajax({
         url: "/api/v1/Comment/NewComment",
@@ -55,5 +52,3 @@ function newComment() {
         }
     });
 }
-
-
