@@ -11,9 +11,12 @@ namespace MlNetCore.Repositories.Database
             _context = context;
             MovieRepository = new MovieRepository(_context);
             UserRepository = new UserRepository(_context);
+            CommentRepository = new CommentRepository(_context);
         }
 
         public IMovieRepository MovieRepository { get; private set; }
+
+        public ICommentRepository CommentRepository { get; private set; }
 
         public IUserRepository UserRepository { get; private set; }
 

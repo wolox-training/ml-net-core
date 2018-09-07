@@ -12,6 +12,11 @@
     "MovieGenre": "Genre",
     "MovieRelDate": "Release Date",
     "MoviePrice": "Price",
+    "MovieRating": "Rating",
     "Username": "Username",
-    "Email": "Email"
+    "Email": "Email",
+    "NextPage": "Next",
+    "PrevPage": "Pevious",
+    "Send": "Send",
+    "Comments": "Comments"
 }

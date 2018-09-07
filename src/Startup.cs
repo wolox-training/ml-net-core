@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MlNetCore.Mail;
 using MlNetCore.Models;
 using MlNetCore.Repositories.Database;
 using MlNetCore.Repositories.Interfaces;
@@ -81,6 +82,7 @@ namespace MlNetCore
                 options.AccessDeniedPath = "/Identity/Account/AccessDenied";
                 options.SlidingExpiration = true;
             });
+           Mailer.SetAccountConfiguration(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

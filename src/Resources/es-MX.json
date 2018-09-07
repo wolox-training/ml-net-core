@@ -14,5 +14,9 @@
     "MoviePrice": "Precio",
     "MovieRating": "Puntaje",
     "Username": "Nombre de Usuario",
-    "Email": "Correo Electrónico"
+    "Email": "Correo Electrónico",
+    "NextPage": "Siguiente",
+    "PrevPage": "Anterior",
+    "Send": "Enviar",
+    "Comments": "Comentarios"
 }

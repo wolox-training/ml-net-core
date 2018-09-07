@@ -7,6 +7,9 @@ using MlNetCore.Models.Views;
 using Microsoft.AspNetCore.Authorization;
 using System;
 using MlNetCore.Models.VO;
+using System.Net.Mail;
+using System.Net;
+using MlNetCore.Mail;
 
 namespace MlNetCore.Controllers
 {
@@ -22,13 +25,18 @@ namespace MlNetCore.Controllers
             this._localizer = localizer;
         }
 
-        public IActionResult Index(string movieGenre, string searchString)
+        public IActionResult Index(string movieGenre, string searchString, string sortOrder, int? pageIndex)
         {
             ViewData["Title"] = _localizer["MovieList"];
             var movieGenreVM = new MovieGenreViewModel();
-            MovieVO movieVO = UnitOfWork.MovieRepository.GetFiltered(movieGenre, searchString).Result;
-            movieGenreVM.genres = movieVO.Genres;
-            movieGenreVM.movies = movieVO.Movies;
+            movieGenreVM.TitleSort = String.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
+            movieGenreVM.DateSort = sortOrder == "Date" ? "reldate_desc" : "Date";
+            movieGenreVM.GenreSort = sortOrder == "Genre" ? "genre_desc" : "Genre";
+            movieGenreVM.CurrentSort = sortOrder;
+            movieGenreVM.CurrentFilter = searchString;
+            MovieVO movieVO = UnitOfWork.MovieRepository.GetFilteredWithOrder(movieGenre, searchString, sortOrder, pageIndex).Result;
+            movieGenreVM.Genres = movieVO.Genres;
+            movieGenreVM.Movies = movieVO.Movies;
             return View(movieGenreVM);
         }
 
@@ -40,6 +48,7 @@ namespace MlNetCore.Controllers
         }
 
         [Authorize]
+        [HttpGet]
         public IActionResult NewMovie()
         {
             ViewData["Title"] = _localizer["NewMovie"];
@@ -47,13 +56,18 @@ namespace MlNetCore.Controllers
         }
 
         [Authorize]
-        public IActionResult CreateNewMovie(MovieViewModel viewMovie)
+        [HttpPost]
+        public IActionResult NewMovie(MovieViewModel viewMovie)
         {
-            Movie movieModel = new Movie(viewMovie.Id, viewMovie.Title, viewMovie.ReleaseDate, 
+            if(ModelState.IsValid)
+            {
+                Movie movieModel = new Movie(viewMovie.Title, viewMovie.ReleaseDate, 
                                         viewMovie.Genre, viewMovie.Price, viewMovie.Rating);
-            UnitOfWork.MovieRepository.Add(movieModel);
-            UnitOfWork.Complete();
-            return RedirectToAction("Index");
+                UnitOfWork.MovieRepository.Add(movieModel);
+                UnitOfWork.Complete();
+                return RedirectToAction("Index");
+            }
+            return View(viewMovie);            
         }
 
         [Authorize]
@@ -62,7 +76,7 @@ namespace MlNetCore.Controllers
             try
             {
                 ViewData["Title"] = _localizer["EditMovie"];
-                return View(ViewModelSetup(id));
+                return View(EditViewSetup(id));
             }
             catch (Exception)
             {
@@ -124,7 +138,7 @@ namespace MlNetCore.Controllers
         {
             try
             {
-                return View(ViewModelSetup(id));
+                return View(DetailViewSetup(id));
             }
             catch(Exception)
             {
@@ -132,22 +146,44 @@ namespace MlNetCore.Controllers
             }
         }
 
-        public MovieViewModel ViewModelSetup(int? id)
+        public IActionResult Send(int? id)
+        {
+            Mailer.Send("lorant.tester@gmail.com", "subject", "the body");
+            return RedirectToAction("Index");
+        }
+
+        public MovieViewModel DetailViewSetup(int? id)
+        {
+            if (id == null)
+                throw new Exception("Not Found");
+            var movie = UnitOfWork.MovieRepository.GetMovieWithComments((int)id);
+            if(movie == null)
+                throw new Exception("Not Found");
+            ViewData["Title"] = _localizer["DetailsMovie"];
+            return new MovieViewModel(movie.Id, movie.Title, movie.ReleaseDate,
+                                    movie.Price, movie.Rating, movie.Comments);
+        }
+
+        public MovieViewModel EditViewSetup(int? id)
         {
             if (id == null)
                 throw new Exception("Not Found");
             var movie = UnitOfWork.MovieRepository.Get((int)id);
             if (movie == null)
                 throw new Exception("Not Found");
-            ViewData["Title"] = _localizer["DetailsMovie"];
-            MovieViewModel model = new MovieViewModel();
-            model.Id = movie.Id;
-            model.Title = movie.Title;
-            model.Genre = movie.Genre;
-            model.ReleaseDate = movie.ReleaseDate;
-            model.Price = movie.Price;
-            model.Rating = movie.Rating;
-            return model;
+            ViewData["Title"] = _localizer["EditMovie"];
+            return new MovieViewModel(movie.Id, movie.Title, movie.ReleaseDate, 
+                                    movie.Price, movie.Rating);
+        }
+
+        public IActionResult NewComment(MovieViewModel model)
+        {
+            Comment comment = new Comment();
+            comment.Movie = UnitOfWork.MovieRepository.Get(model.Id);
+            comment.Text = model.Comment;
+            UnitOfWork.CommentRepository.Add(comment);
+            UnitOfWork.Complete();
+            return RedirectToAction("Details", new { id = model.Id });
         }
     }
 }

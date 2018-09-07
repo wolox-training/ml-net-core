@@ -13,7 +13,7 @@ namespace MlNetCore.Repositories
 {
     public class MovieRepository : Repository<Movie>, IMovieRepository
     {
-        public MovieRepository(DbContext context) : base(context)
+        public MovieRepository(DataBaseContext context) : base(context)
         {
         }
 
@@ -22,7 +22,8 @@ namespace MlNetCore.Repositories
             get { return Context as DataBaseContext; }
         }
 
-        public async Task<MovieVO> GetFiltered(string movieGenre, string searchString)
+        public async Task<MovieVO> GetFilteredWithOrder(string movieGenre, 
+                                    string searchString, string sortOrder, int? pageIndex)
         {
             IQueryable<string> genreQuery = from m in MovieContext.Movies
                                             orderby m.Genre
@@ -32,17 +33,44 @@ namespace MlNetCore.Repositories
 
             if (!String.IsNullOrEmpty(searchString))
             {
+                pageIndex = 1;
                 movies = movies.Where(s => s.Title.Contains(searchString));
             }
-
             if (!String.IsNullOrEmpty(movieGenre))
             {
                 movies = movies.Where(x => x.Genre == movieGenre);
             }
+            switch (sortOrder)
+            {
+                case "title_desc":
+                    movies = movies.OrderByDescending(s => s.Title);
+                    break;
+                case "reldate_desc":
+                    movies = movies.OrderByDescending(s => s.ReleaseDate);
+                    break;
+                case "genre_desc":
+                    movies = movies.OrderByDescending(s => s.Genre);
+                    break;
+                case "Date":
+                    movies = movies.OrderBy(s => s.ReleaseDate);
+                    break;
+                case "Genre":
+                    movies = movies.OrderBy(s => s.Genre);
+                    break;
+                default:
+                    movies = movies.OrderBy(s => s.Title);
+                    break;
+            }
             MovieVO vo = new MovieVO();
-            vo.Movies = await movies.ToListAsync();
+            int pageSize = 4;
+            vo.Movies = await PaginatedList<Movie>.CreateAsync (
+                 movies.AsNoTracking(), pageIndex ?? 1, pageSize); 
             vo.Genres = new SelectList(await genreQuery.Distinct().ToListAsync());
             return vo;
+        }
+
+        public Movie GetMovieWithComments(int id) {
+            return Context.Movies.Where(m => m.Id == id).Include(m => m.Comments).FirstOrDefault();
         }
     }
 }
