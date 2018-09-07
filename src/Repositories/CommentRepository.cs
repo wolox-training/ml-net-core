@@ -5,9 +5,9 @@ using MlNetCore.Repositories.Interfaces;
 
 namespace MlNetCore.Repositories
 {
-    public class UserRepository : Repository<User>, IUserRepository
+    public class CommentRepository : Repository<Comment>, ICommentRepository
     {
-        public UserRepository(DataBaseContext context) : base(context)
+        public CommentRepository(DataBaseContext context) : base(context)
         {
         }
     }

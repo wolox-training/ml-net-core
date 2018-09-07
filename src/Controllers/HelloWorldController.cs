@@ -76,7 +76,7 @@ namespace MlNetCore.Controllers
             try
             {
                 ViewData["Title"] = _localizer["EditMovie"];
-                return View(ViewModelSetup(id));
+                return View(EditViewSetup(id));
             }
             catch (Exception)
             {
@@ -138,7 +138,7 @@ namespace MlNetCore.Controllers
         {
             try
             {
-                return View(ViewModelSetup(id));
+                return View(DetailViewSetup(id));
             }
             catch(Exception)
             {
@@ -148,26 +148,42 @@ namespace MlNetCore.Controllers
 
         public IActionResult Send(int? id)
         {
-            Mailer.Send("lorant.mikolas@wolox.com.ar", "subject", "the body");
+            Mailer.Send("lorant.tester@gmail.com", "subject", "the body");
             return RedirectToAction("Index");
         }
 
-        public MovieViewModel ViewModelSetup(int? id)
+        public MovieViewModel DetailViewSetup(int? id)
+        {
+            if (id == null)
+                throw new Exception("Not Found");
+            var movie = UnitOfWork.MovieRepository.GetMovieWithComments((int)id);
+            if(movie == null)
+                throw new Exception("Not Found");
+            ViewData["Title"] = _localizer["DetailsMovie"];
+            return new MovieViewModel(movie.Id, movie.Title, movie.ReleaseDate,
+                                    movie.Price, movie.Rating, movie.Comments);
+        }
+
+        public MovieViewModel EditViewSetup(int? id)
         {
             if (id == null)
                 throw new Exception("Not Found");
             var movie = UnitOfWork.MovieRepository.Get((int)id);
             if (movie == null)
                 throw new Exception("Not Found");
-            ViewData["Title"] = _localizer["DetailsMovie"];
-            MovieViewModel model = new MovieViewModel();
-            model.Id = movie.Id;
-            model.Title = movie.Title;
-            model.Genre = movie.Genre;
-            model.ReleaseDate = movie.ReleaseDate;
-            model.Price = movie.Price;
-            model.Rating = movie.Rating;
-            return model;
+            ViewData["Title"] = _localizer["EditMovie"];
+            return new MovieViewModel(movie.Id, movie.Title, movie.ReleaseDate, 
+                                    movie.Price, movie.Rating);
+        }
+
+        public IActionResult NewComment(MovieViewModel model)
+        {
+            Comment comment = new Comment();
+            comment.Movie = UnitOfWork.MovieRepository.Get(model.Id);
+            comment.Text = model.Comment;
+            UnitOfWork.CommentRepository.Add(comment);
+            UnitOfWork.Complete();
+            return RedirectToAction("Details", new { id = model.Id });
         }
     }
 }
