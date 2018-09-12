@@ -8,7 +8,7 @@ $(document).ready(function() {
         loadData();
         $("#comment-submit").click(function () {
             newComment();
-        })
+        });
     }
 });
 
@@ -47,7 +47,6 @@ function newComment() {
         },
         dataType: "json",
         success: function (result) {
-            alert("New comment added");
             loadData();
         },
         error: function (errormessage) {
