@@ -8,5 +8,6 @@ RUN dotnet restore
 
 # Copy and build everything else
 COPY . ./
+
 RUN dotnet publish -c Release -o out
-CMD ASPNETCORE_URLS=https://*:$PORT dotnet out/NetCoreBootstrap.dll
+CMD ASPNETCORE_URLS=http://*:$PORT dotnet out/MlNetCore.dll
